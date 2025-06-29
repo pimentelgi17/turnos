@@ -100,26 +100,25 @@ app.get('/:clienteId/panel', (req, res) => {
   let tabla = `
     <section class="tabla-turnos">
       <h1>Turnos de ${clienteId}</h1>
-      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-  <input type="text" id="filtroNombre" placeholder="Filtrar por nombre..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-  <input type="date" id="filtroFecha" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-  <button onclick="aplicarFiltros()" style="padding: 10px 20px; border-radius: 8px;">Filtrar</button>
-  <button onclick="resetearFiltros()" style="padding: 10px 20px; border-radius: 8px;">Limpiar</button>
-</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+        <input type="text" id="filtroNombre" placeholder="Filtrar por nombre..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        <input type="date" id="filtroFecha" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        <button onclick="aplicarFiltros()" style="padding: 10px 20px; border-radius: 8px;">Filtrar</button>
+        <button onclick="resetearFiltros()" style="padding: 10px 20px; border-radius: 8px;">Limpiar</button>
+      </div>
 
-</div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>WhatsApp</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>WhatsApp</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody>
   `;
 
   turnos.forEach(turno => {
@@ -134,7 +133,7 @@ app.get('/:clienteId/panel', (req, res) => {
     `;
   });
 
-  tabla += `</tbody></table></section>`;
+  tabla += `</tbody></table></div></section>`;
 
   res.send(`
     <html lang="es">
@@ -143,6 +142,40 @@ app.get('/:clienteId/panel', (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Panel de Turnos - ${clienteId}</title>
         ${cssLinks}
+        <style>
+          @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+              display: block;
+            }
+
+            thead tr {
+              display: none;
+            }
+
+            td {
+              position: relative;
+              padding-left: 50%;
+              text-align: right;
+            }
+
+            td::before {
+              position: absolute;
+              top: 0;
+              left: 10px;
+              width: 45%;
+              padding-right: 10px;
+              white-space: nowrap;
+              font-weight: bold;
+              text-align: left;
+            }
+
+            td:nth-of-type(1)::before { content: "Nombre"; }
+            td:nth-of-type(2)::before { content: "Correo"; }
+            td:nth-of-type(3)::before { content: "WhatsApp"; }
+            td:nth-of-type(4)::before { content: "Fecha"; }
+            td:nth-of-type(5)::before { content: "Hora"; }
+          }
+        </style>
       </head>
       <body>
         <header>Panel de Turnos</header>
@@ -151,30 +184,30 @@ app.get('/:clienteId/panel', (req, res) => {
         </main>
 
         <script>
-  function aplicarFiltros() {
-    const nombre = document.getElementById('filtroNombre').value.toLowerCase();
-    const fecha = document.getElementById('filtroFecha').value;
+          function aplicarFiltros() {
+            const nombre = document.getElementById('filtroNombre').value.toLowerCase();
+            const fecha = document.getElementById('filtroFecha').value;
 
-    document.querySelectorAll('tbody tr').forEach(tr => {
-      const nombreTexto = tr.children[0].innerText.toLowerCase();
-      const fechaTexto = tr.children[3].innerText;
-      const coincideNombre = !nombre || nombreTexto.includes(nombre);
-      const coincideFecha = !fecha || fechaTexto === fecha;
-      tr.style.display = coincideNombre && coincideFecha ? '' : 'none';
-    });
-  }
+            document.querySelectorAll('tbody tr').forEach(tr => {
+              const nombreTexto = tr.children[0].innerText.toLowerCase();
+              const fechaTexto = tr.children[3].innerText;
+              const coincideNombre = !nombre || nombreTexto.includes(nombre);
+              const coincideFecha = !fecha || fechaTexto === fecha;
+              tr.style.display = coincideNombre && coincideFecha ? '' : 'none';
+            });
+          }
 
-  function resetearFiltros() {
-    document.getElementById('filtroNombre').value = '';
-    document.getElementById('filtroFecha').value = '';
-    aplicarFiltros();
-  }
-</script>
-
+          function resetearFiltros() {
+            document.getElementById('filtroNombre').value = '';
+            document.getElementById('filtroFecha').value = '';
+            aplicarFiltros();
+          }
+        </script>
       </body>
     </html>
   `);
 });
+
 
 // Ruta para agendar turno
 app.post('/api/agendar/:clienteId', async (req, res) => {
