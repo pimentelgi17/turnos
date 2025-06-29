@@ -230,6 +230,14 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
   res.json({ mensaje: 'Turno confirmado y enviado por mail' });
 });
 
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando. Agregá /dentista-jorge u otro ID de cliente');
+});
+
 app.listen(3000, () => {
   console.log('Turnero funcionando en http://localhost:3000');
 });
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando en Railway');
+});
+
