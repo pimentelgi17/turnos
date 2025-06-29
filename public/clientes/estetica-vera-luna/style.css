@@ -1,0 +1,180 @@
+/* Tipografía */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap'); /* Asegúrate de que Dancing Script está aquí si la usas */
+
+
+/* Estilo general del body (para este cliente específico) */
+body {
+    font-family: 'Playfair Display', serif; /* Fuente principal del cliente */
+    background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed; /* Fondo del cliente */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #4b3e36; /* Color de texto general del cliente */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* Centra el formulario horizontalmente en pantallas grandes */
+    align-items: center; /* Centra el formulario verticalmente en pantallas grandes */
+}
+
+/* Contenedor principal del formulario (el "cuadro" blanco) */
+main {
+    background: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
+    padding: 40px; /* Espaciado interno para escritorio */
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px; /* Ancho máximo para escritorio */
+    width: 90%; /* Ancho flexible para adaptarse */
+}
+
+/* Estilos para el branding (logo y texto "Vera Luna" / "Estética Integral") */
+/* Asumo que el HTML tendrá algo como:
+   <div class="pimex-brand-center">
+       <img src="/clientes/estetica-vera-luna/logo.png" alt="Logo">
+       <p>Vera Luna</p>
+       <p>Estética Integral</p> // Si hay una segunda línea
+   </div>
+*/
+.pimex-brand-center {
+    text-align: center;
+    margin-bottom: 24px; /* Espacio debajo del logo/nombre */
+}
+
+.pimex-brand-center img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 0.5rem;
+}
+
+.pimex-brand-center p {
+    font-weight: bold;
+    font-size: 1.1rem; /* Un poco más grande para el nombre */
+    color: #4b3e36; /* Color de texto del branding del cliente */
+    line-height: 1.2; /* Ajusta la altura de línea si hay varias líneas */
+}
+
+
+/* Título del formulario ("Reservar turno") */
+form h1 {
+    font-family: 'Dancing Script', cursive; /* Fuente específica para el título */
+    font-size: 2.2rem;
+    color: #bb8b6c; /* Color de acento del cliente */
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Inputs y selects del formulario */
+form input,
+form select {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 12px;
+    margin: 8px 0; /* Espacio vertical entre campos */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box; /* Asegura que padding no sume al width */
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Color de texto */
+}
+
+/* Botón de enviar formulario */
+form button {
+    width: 100%;
+    background-color: #bb8b6c; /* Color de acento del cliente */
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #a76d52; /* Color de hover del cliente */
+}
+
+/* Mensaje (por ejemplo, confirmación de reserva) */
+#mensaje {
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #bb8b6c; /* Color de acento del cliente */
+}
+
+/* WhatsApp flotante (si se usa en este cliente, puede ir aquí o en default.css) */
+/* Si este es el CSS del cliente, debería sobreescribir el de default.css si es diferente */
+/* .whatsapp-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.whatsapp-float {
+    width: 60px;
+    height: 60px;
+} */
+
+
+/* ------------------------------------------------------------- */
+/* MEDIA QUERIES PARA ADAPTACIÓN A DISPOSITIVOS MÓVILES (hasta 768px de ancho) */
+/* ------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Ajustes para el body en móviles */
+    body {
+        align-items: flex-start; /* Alinea el contenido arriba en móviles */
+        justify-content: flex-start; /* Alinea el contenido a la izquierda en móviles */
+        padding-top: 20px; /* Pequeño espacio en la parte superior */
+        min-height: auto; /* Permite que el body se expanda si el contenido es largo */
+        /* Aseguramos que la imagen de fondo del cliente se mantenga, si aplica */
+        background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    /* Contenedor principal (main) más grande y centrado en móviles */
+    main {
+        max-width: 95%; /* Elimina el límite de 400px en móviles */
+        width: 95%; /* Ocupa casi todo el ancho disponible */
+        padding: 24px; /* Padding interno adecuado para móviles */
+        margin: 20px auto; /* Margen superior/inferior de 20px, centrado horizontalmente */
+        border-radius: 16px; /* Mantiene los bordes redondeados */
+    }
+
+    /* Título del formulario en móviles */
+    form h1 {
+        font-size: 1.8rem; /* Tamaño de fuente ligeramente más pequeño para móviles */
+        margin-bottom: 16px;
+        color: #b3825f; /* Un color similar al #bb8b6c pero quizás un poco más oscuro si se desea */
+    }
+
+    /* Inputs y selects en móviles */
+    form input,
+    form select {
+        padding: 14px; /* Más padding para facilitar el tacto */
+        font-size: 1rem;
+        border-radius: 12px; /* Más redondeado */
+        border: 1px solid #ddd; /* Borde más suave */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra sutil */
+    }
+
+    /* Botón en móviles */
+    form button {
+        background-color: #b3825f; /* Color de botón consistente */
+        border-radius: 12px; /* Más redondeado */
+        padding: 14px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    form button:hover {
+        background-color: #9d6a4c; /* Color de hover consistente */
+    }
+
+    /* Texto de branding en móviles */
+    .pimex-brand-center p {
+        font-size: 1.1rem; /* Consistente con el tamaño de escritorio o ajusta si es necesario */
+        color: #b3825f; /* Color de texto del branding consistente */
+    }
+}

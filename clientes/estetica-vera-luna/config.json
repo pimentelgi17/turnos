@@ -1,0 +1,10 @@
+{
+    "nombre": "Vera Luna",
+    "rubro": "estetica ",
+    "email": "veraluna@gmail.com",
+    "dias": [1, 2, 3, 4, 5],
+    "horaInicio": 9,
+    "horaFin": 17,
+    "duracionTurno": 30
+  }
+  

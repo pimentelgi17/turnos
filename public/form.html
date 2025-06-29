@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservar turno</title>
+
+  <!-- Estilo general -->
+  <link rel="stylesheet" href="/default.css">
+
+  <!-- CLIENTE_STYLE -->
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main>
+    <!-- Branding logos y nombres  --> 
+
+    <!-- CLIENTE_LOGO -->
+    <!-- CLIENTE_NOMBRE -->
+
+    <!-- Formulario -->
+    <form id="form-turno">
+      <h1>Reservar turno</h1>
+      <input type="text" name="nombre" placeholder="Tu nombre" required>
+      <input type="email" name="correo" placeholder="Tu correo" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp (+549...)" required>
+      <input type="date" name="fecha" required>
+      <select name="hora" id="hora-select" required>
+        <option value="">-- Seleccionar hora --</option>
+      </select>
+      <button type="submit">Reservar</button>
+      <div id="mensaje"></div>
+    </form>
+  </main>
+
+  <script>
+    const clienteId = window.location.pathname.split('/')[1];
+    const form = document.getElementById('form-turno');
+    const horaSelect = document.getElementById('hora-select');
+    const mensaje = document.getElementById('mensaje');
+
+    form.fecha.addEventListener('change', cargarHorarios);
+
+    async function cargarHorarios() {
+      const fecha = form.fecha.value;
+      if (!fecha) return;
+
+      try {
+        const res = await fetch(`/turnos/${clienteId}.json`);
+        const turnos = res.ok ? await res.json() : [];
+        const ocupados = turnos.filter(t => t.fecha === fecha).map(t => t.hora);
+
+        horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
+
+        const inicio = 10 * 60;
+        const fin = 17 * 60;
+
+        for (let min = inicio; min < fin; min += 30) {
+          const h = String(Math.floor(min / 60)).padStart(2, '0');
+          const m = String(min % 60).padStart(2, '0');
+          const hora = `${h}:${m}`;
+
+          const option = document.createElement('option');
+          option.value = hora;
+
+          if (ocupados.includes(hora)) {
+            option.textContent = `${hora} (No disponible)`;
+            option.disabled = true;
+          } else {
+            option.textContent = hora;
+          }
+
+          horaSelect.appendChild(option);
+        }
+      } catch (error) {
+        console.error('Error cargando horarios:', error);
+        mensaje.textContent = 'No se pudieron cargar los horarios';
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const datos = {
+        nombre: form.nombre.value,
+        correo: form.correo.value,
+        whatsapp: form.whatsapp.value,
+        fecha: form.fecha.value,
+        hora: form.hora.value
+      };
+
+      const res = await fetch(`/api/agendar/${clienteId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      });
+
+      const data = await res.json();
+      mensaje.textContent = data.mensaje || 'Error al agendar turno';
+      if (res.ok) form.reset();
+    });
+  </script>
+</body>
+</html>

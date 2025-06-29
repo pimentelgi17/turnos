@@ -1,0 +1,178 @@
+/* Tipografía */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Estilo general del body */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex; /* Para centrar main horizontal y verticalmente */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+
+    background: url('pimex-fondo.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #333; /* Color de texto general */
+}
+
+/* Contenedor principal del formulario */
+main {
+    background-color: rgba(246, 246, 246, 0.997);
+    padding: 40px; /* Padding para escritorio */
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px; /* Ancho máximo para pantallas grandes */
+    width: 90%; /* Ancho base para adaptarse */
+}
+
+/* Branding (Logo y Texto debajo del logo) */
+.pimex-brand-center {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.pimex-brand-center img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 0.5rem;
+}
+
+.pimex-brand-center p {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #B0B0B0; /* Color gris suave */
+}
+
+/* Título del formulario (h1 dentro del form) */
+form h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #B0B0B0; /* Color gris suave */
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Inputs y selects */
+form input,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    /* Colores para inputs que coincidan con la imagen o con Pimex */
+    background: #fff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+}
+
+/* Botón de enviar */
+form button {
+    width: 100%;
+    background-color: #B0B0B0; /* Color del botón gris suave */
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #9c9c9c; /* Color más oscuro al pasar el mouse */
+}
+
+/* Mensaje de confirmación/error */
+#mensaje {
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #B0B0B0; /* Color gris suave */
+}
+
+/* WhatsApp flotante (opcional) */
+.whatsapp-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.whatsapp-float {
+    width: 60px;
+    height: 60px;
+}
+
+
+/* ------------------------------------------------------------- */
+/* MEDIA QUERIES PARA ADAPTACIÓN A DISPOSITIVOS MÓVILES */
+/* ------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Ajustes para el body en móviles */
+    body {
+        /* Para que el formulario no se centre verticalmente sino que empiece desde arriba */
+        align-items: flex-start;
+        justify-content: flex-start; /* Asegura que no haya justificación horizontal extra */
+        padding-top: 20px; /* Un poco de espacio en la parte superior */
+        min-height: auto; /* Permite que el contenido desborde si es necesario */
+
+        /* Fondo del body, si es específico para el cliente aquí
+           (OJO: si tu imagen de fondo del cliente es diferente a pimex-fondo.png,
+           debes ajustar la URL aquí. Si es la misma, puedes quitar esta regla
+           si ya está definida arriba sin media query y es la misma imagen)
+           background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
+           background-size: cover;
+        */
+        /* Si pimex-fondo.png es el fondo universal, déjalo sin media query */
+    }
+
+    /* Contenedor principal (main) más grande en móviles */
+    main {
+        max-width: 95%; /* Ya no tiene un límite duro de 400px, puede expandirse más */
+        width: 95%; /* Ocupa casi todo el ancho */
+        padding: 24px; /* Un poco menos de padding que en escritorio */
+        margin: 20px auto; /* Centrar horizontalmente y dar margen superior/inferior */
+        border-radius: 16px; /* Asegura los bordes redondeados */
+    }
+
+    /* Título del formulario en móviles */
+    form h1 {
+        font-size: 1.8rem; /* Tamaño de fuente ligeramente más pequeño */
+        margin-bottom: 16px;
+        /* Color, asegúrate de que sea el mismo #B0B0B0 o el deseado */
+        color: #B0B0B0;
+    }
+
+    /* Inputs y selects en móviles */
+    form input,
+    form select {
+        padding: 14px; /* Un poco más de padding que el default de 12px para mayor tocabilidad */
+        font-size: 1rem;
+        border-radius: 12px; /* Más redondeado */
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    /* Botón en móviles */
+    form button {
+        background-color: #B0B0B0; /* Color del botón */
+        border-radius: 12px; /* Más redondeado */
+        padding: 14px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    form button:hover {
+        background-color: #9c9c9c; /* Color de hover consistente */
+    }
+
+    /* Texto de branding en móviles */
+    .pimex-brand-center p {
+        font-size: 1.1rem; /* Un poco más grande para mejor legibilidad */
+        color: #B0B0B0; /* Color consistente */
+    }
+}
