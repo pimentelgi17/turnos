@@ -234,10 +234,13 @@ app.get('/', (req, res) => {
   res.send('Servidor funcionando. Agregá /dentista-jorge u otro ID de cliente');
 });
 
+// Ruta base para evitar error 404 en '/'
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando correctamente.');
+});
+
 app.listen(3000, () => {
   console.log('Turnero funcionando en http://localhost:3000');
 });
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando en Railway');
-});
+
 
