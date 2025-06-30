@@ -70,14 +70,28 @@ app.get('/:clienteId', (req, res) => {
 
   const nombreHtml = `<p class="nombre-cliente">${config.nombre}</p>`;
 
+  const ogTags = `
+    <meta property="og:title" content="Reservá con ${config.nombre}">
+    <meta property="og:description" content="Turnos online - Rápido y fácil">
+    <meta property="og:image" content="https://tusitio.com/clientes/${clienteId}/logo.png">
+    <meta property="og:url" content="https://tusitio.com/${clienteId}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+  `;
+
+  if (!html.includes('name="viewport"')) {
+    html = html.replace('<head>', `<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    ${ogTags}
+    `);
+  } else {
+    html = html.replace('<head>', `<head>
+${ogTags}`);
+  }
+
   html = html.replace('<!-- CLIENTE_STYLE -->', cssHref);
   html = html.replace('<!-- CLIENTE_LOGO -->', logoHtml);
   html = html.replace('<!-- CLIENTE_NOMBRE -->', nombreHtml);
-
-  // Aseguramos <meta name="viewport">
-  if (!html.includes('name="viewport"')) {
-    html = html.replace('<head>', '<head><meta name="viewport" content="width=device-width, initial-scale=1.0">');
-  }
 
   res.send(html);
 });
