@@ -172,3 +172,7 @@ td, th {
     text-align: left;
     border-bottom: 1px solid #ccc;
 }
+select option[disabled] {
+  color: #999;
+  background-color: #f9f9f9;
+}

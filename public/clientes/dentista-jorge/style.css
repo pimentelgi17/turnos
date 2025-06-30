@@ -120,3 +120,7 @@ tr:hover {
   td:nth-of-type(4)::before { content: "Fecha"; }
   td:nth-of-type(5)::before { content: "Hora"; }
 }
+select option[disabled] {
+  color: #999;
+  background-color: #f9f9f9;
+}

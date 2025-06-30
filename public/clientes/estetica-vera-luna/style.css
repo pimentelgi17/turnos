@@ -242,3 +242,7 @@ tr:hover {
     border-bottom: 2px solid #ccc;
   }
 }
+select option[disabled] {
+  color: #999;
+  background-color: #f9f9f9;
+}

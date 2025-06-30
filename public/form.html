@@ -3,29 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Reservar turno</title>
-
-  <!-- Estilo general -->
   <link rel="stylesheet" href="/default.css">
-
   <!-- CLIENTE_STYLE -->
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <main>
-    <!-- Branding logos y nombres  --> 
-
     <!-- CLIENTE_LOGO -->
     <!-- CLIENTE_NOMBRE -->
 
-    <!-- Formulario -->
     <form id="form-turno">
       <h1>Reservar turno</h1>
       <input type="text" name="nombre" placeholder="Tu nombre" required>
       <input type="email" name="correo" placeholder="Tu correo" required>
       <input type="tel" name="whatsapp" placeholder="WhatsApp (+549...)" required>
-      <input type="date" name="fecha" required>
+      <input type="date" name="fecha" id="fecha" required>
       <select name="hora" id="hora-select" required>
         <option value="">-- Seleccionar hora --</option>
       </select>
@@ -39,8 +31,9 @@
     const form = document.getElementById('form-turno');
     const horaSelect = document.getElementById('hora-select');
     const mensaje = document.getElementById('mensaje');
+    const btnReservar = form.querySelector('button[type="submit"]');
 
-    form.fecha.addEventListener('change', cargarHorarios);
+    document.getElementById('fecha').addEventListener('change', cargarHorarios);
 
     async function cargarHorarios() {
       const fecha = form.fecha.value;
@@ -55,24 +48,31 @@
 
         const inicio = 10 * 60;
         const fin = 17 * 60;
+        let disponibles = 0;
 
         for (let min = inicio; min < fin; min += 30) {
           const h = String(Math.floor(min / 60)).padStart(2, '0');
           const m = String(min % 60).padStart(2, '0');
           const hora = `${h}:${m}`;
 
+          if (ocupados.includes(hora)) continue; // Ocupado: no agregar
+
           const option = document.createElement('option');
           option.value = hora;
-
-          if (ocupados.includes(hora)) {
-            option.textContent = `${hora} (No disponible)`;
-            option.disabled = true;
-          } else {
-            option.textContent = hora;
-          }
-
+          option.textContent = hora;
           horaSelect.appendChild(option);
+          disponibles++;
         }
+
+        if (disponibles === 0) {
+          const opt = document.createElement('option');
+          opt.textContent = 'No hay horarios disponibles';
+          opt.disabled = true;
+          opt.selected = true;
+          horaSelect.appendChild(opt);
+        }
+
+        btnReservar.disabled = disponibles === 0;
       } catch (error) {
         console.error('Error cargando horarios:', error);
         mensaje.textContent = 'No se pudieron cargar los horarios';
@@ -97,7 +97,11 @@
 
       const data = await res.json();
       mensaje.textContent = data.mensaje || 'Error al agendar turno';
-      if (res.ok) form.reset();
+      if (res.ok) {
+        form.reset();
+        horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
+        btnReservar.disabled = false;
+      }
     });
   </script>
 </body>

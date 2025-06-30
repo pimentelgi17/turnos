@@ -12,6 +12,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
+app.use('/turnos', express.static(path.join(__dirname, 'turnos')));
+
 
 const CLIENTES_DIR = path.join(__dirname, 'clientes');
 const TURNOS_DIR = path.join(__dirname, 'turnos');
@@ -237,6 +239,19 @@ app.get('/:clienteId/panel', (req, res) => {
       </body>
     </html>
   `);
+});
+// Ruta para obtener horarios ocupados en una fecha
+app.get('/api/turnos-ocupados/:clienteId', (req, res) => {
+  const clienteId = req.params.clienteId;
+  const fecha = req.query.fecha;
+  if (!clienteId || !fecha) return res.status(400).json({ error: 'Faltan datos' });
+
+  const turnos = cargarTurnos(clienteId);
+  const ocupados = turnos
+    .filter(t => t.fecha === fecha)
+    .map(t => t.hora);
+
+  res.json({ ocupados });
 });
 
 
