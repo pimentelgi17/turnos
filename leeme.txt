@@ -1,0 +1,25 @@
+http://localhost:3000/estetica-vera-luna
+http://localhost:3000/estetica-vera-luna/panel?clave=1234
+node server.js
+
+
+http://localhost:3000/estetica-vera-luna/panel
+
+Acción	URL
+http://localhost:3000/dentista-jorge
+http://localhost:3000/dentista-jorge/panel?clave=1234
+
+# 1. Asegurate de estar en la carpeta del proyecto
+cd C:\Users\Gisele\Desktop\PROYECTO_TURNITOS_DB_NUEVO
+
+# 2. Ver qué archivos cambiaron
+git status
+
+# 3. Agregar todos los archivos modificados
+git add .
+
+# 4. Hacer el commit con mensaje
+git commit -m "Correcciones responsive en panel de turnos"
+
+# 5. Subir al repositorio remoto (origin)
+git push origin main

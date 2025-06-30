@@ -106,7 +106,6 @@ app.get('/:clienteId/panel', (req, res) => {
         <button onclick="aplicarFiltros()" style="padding: 10px 20px; border-radius: 8px;">Filtrar</button>
         <button onclick="resetearFiltros()" style="padding: 10px 20px; border-radius: 8px;">Limpiar</button>
       </div>
-
       <div class="table-wrapper">
         <table>
           <thead>
@@ -143,6 +142,34 @@ app.get('/:clienteId/panel', (req, res) => {
         <title>Panel de Turnos - ${clienteId}</title>
         ${cssLinks}
         <style>
+          main.container {
+            max-width: 100%;
+            width: 95%;
+            margin: 1rem auto;
+            padding: 1rem;
+            box-sizing: border-box;
+            background-color: rgba(255,255,255,0.97);
+            border-radius: 16px;
+          }
+
+          .table-wrapper {
+            overflow-x: auto;
+          }
+
+          table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+          }
+
+          td, th {
+            word-wrap: break-word;
+            white-space: normal;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+          }
+
           @media (max-width: 768px) {
             table, thead, tbody, th, td, tr {
               display: block;
