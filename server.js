@@ -47,7 +47,6 @@ function estaEnHorarioPermitido(config, fecha, hora) {
   return config.dias.includes(dia) && horaInt >= config.horaInicio && horaInt < config.horaFin;
 }
 
-// Ruta para mostrar formulario
 app.get('/:clienteId', (req, res) => {
   const clienteId = req.params.clienteId;
   const configPath = path.join(__dirname, 'clientes', clienteId, 'config.json');
@@ -59,10 +58,9 @@ app.get('/:clienteId', (req, res) => {
   let html = fs.readFileSync(formPath, 'utf8');
 
   const clienteCssPath = path.join(__dirname, 'public', 'clientes', clienteId, 'style.css');
-const cssHref = fs.existsSync(clienteCssPath)
-  ? `<link rel="stylesheet" href="/clientes/${clienteId}/style.css">`
-  : `<link rel="stylesheet" href="/default.css">`;
-
+  const cssHref = fs.existsSync(clienteCssPath)
+    ? `<link rel="stylesheet" href="/clientes/${clienteId}/style.css">`
+    : `<link rel="stylesheet" href="/default.css">`;
 
   const logoHtml = fs.existsSync(path.join(__dirname, 'public', 'clientes', clienteId, 'logo.png'))
     ? `<img src="/clientes/${clienteId}/logo.png?v=${Date.now()}" alt="Logo de ${config.nombre}" style="height:70px; width:auto; margin-bottom:0.5rem;">`
@@ -74,8 +72,14 @@ const cssHref = fs.existsSync(clienteCssPath)
   html = html.replace('<!-- CLIENTE_LOGO -->', logoHtml);
   html = html.replace('<!-- CLIENTE_NOMBRE -->', nombreHtml);
 
+  // Aseguramos <meta name="viewport">
+  if (!html.includes('name="viewport"')) {
+    html = html.replace('<head>', '<head><meta name="viewport" content="width=device-width, initial-scale=1.0">');
+  }
+
   res.send(html);
 });
+
 
 // Ruta para mostrar panel con buscador
 app.get('/:clienteId/panel', (req, res) => {
@@ -273,8 +277,7 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="${logoUrl}" alt="Logo" style="height: 80px; margin-bottom: 20px;">
-          <h1 style="color: #bb8b6c;">Turno Confirmado</h1>
+          <h1 style="color:rgb(7, 248, 196);">Turno Confirmado</h1>
         </div>
         <p>Hola <strong>${nombre}</strong>,</p>
         <p>Tu turno con <strong>${config.nombre}</strong> (${config.rubro}) ha sido confirmado.</p>

@@ -12,7 +12,6 @@ body {
     color: #4b3e36;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -154,90 +153,92 @@ tr:hover {
 }
 
 @media (max-width: 768px) {
-    .tabla-turnos {
-        padding: 1rem;
-    }
+  /* Corrige centramiento que achica el formulario */
+  body {
+    display: block !important;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding: 20px 10px;
+    min-height: auto;
+    background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
+    background-size: cover;
+  }
 
-    table {
-        font-size: 0.9rem;
-        min-width: unset;
-    }
+  main {
+    max-width: 95%;
+    width: 100%;
+    padding: 24px 16px;
+    margin: 20px auto;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
 
-    th, td {
-        padding: 0.6rem;
-    }
+  form h1 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    color: #b3825f;
+  }
 
-    td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #666;
-    }
+  form input,
+  form select {
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
 
-    td {
-        display: block;
-        text-align: right;
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-    }
+  form button {
+    background-color: #b3825f;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
 
-    tr {
-        display: block;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #ccc;
-    }
-}
+  form button:hover {
+    background-color: #9d6a4c;
+  }
 
-@media (max-width: 768px) {
-    body {
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding-top: 20px;
-        min-height: auto;
-        background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
-        background-size: cover;
-    }
+  .pimex-brand-center p {
+    font-size: 1.1rem;
+    color: #b3825f;
+  }
 
-    main {
-        max-width: 95%;
-        width: 95%;
-        padding: 24px;
-        margin: 20px auto;
-        border-radius: 16px;
-    }
+  .tabla-turnos {
+    padding: 1rem;
+  }
 
-    form h1 {
-        font-size: 1.8rem;
-        margin-bottom: 16px;
-        color: #b3825f;
-    }
+  table {
+    font-size: 0.9rem;
+    min-width: unset;
+  }
 
-    form input,
-    form select {
-        padding: 14px;
-        font-size: 1rem;
-        border-radius: 12px;
-        border: 1px solid #ddd;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
+  th, td {
+    padding: 0.6rem;
+  }
 
-    form button {
-        background-color: #b3825f;
-        border-radius: 12px;
-        padding: 14px;
-        font-size: 1rem;
-        font-weight: bold;
-    }
+  td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666;
+  }
 
-    form button:hover {
-        background-color: #9d6a4c;
-    }
+  td {
+    display: block;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
 
-    .pimex-brand-center p {
-        font-size: 1.1rem;
-        color: #b3825f;
-    }
+  tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ccc;
+  }
 }
