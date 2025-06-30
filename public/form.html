@@ -17,7 +17,7 @@
       <input type="text" name="nombre" placeholder="Tu nombre" required>
       <input type="email" name="correo" placeholder="Tu correo" required>
       <input type="tel" name="whatsapp" placeholder="WhatsApp (+549...)" required>
-      <input type="date" name="fecha" id="fecha" required>
+      <input type="date" name="fecha" id="fecha" required min="">
       <select name="hora" id="hora-select" required>
         <option value="">-- Seleccionar hora --</option>
       </select>
@@ -102,7 +102,13 @@
         horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
         btnReservar.disabled = false;
       }
-    });
+    await cargarHorarios();
+      });
+      document.addEventListener('DOMContentLoaded', () => {
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha').setAttribute('min', hoy);
+});
+
   </script>
 </body>
 </html>
