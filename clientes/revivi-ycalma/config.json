@@ -1,9 +1,24 @@
 {
-    "nombre": "Reviví y Calma",
-    "rubro": "estetica ",
-    "email": "revivi@gmail.com",
-    "dias": [1, 2, 3, 4, 5],
-    "horaInicio": 9,
-    "horaFin": 19,
-    "duracionTurno": 30
+  "nombre": "Reviví y Calma",
+  "rubro": "estetica",
+  "email": "revivi@gmail.com",
+  "dias": [1, 2, 3, 4, 5],
+  "horaInicio": 9,
+  "horaFin": 19,
+  "servicios": {
+    "Masajes relajantes": 60,
+    "Descontracturantes": 60,
+    "Limpieza facial": 45,
+    "Peeling facial manual": 45,
+    "Limpieza facial + punta de diamante": 60,
+    "Limpieza facial + radiofrecuencia (combo x4)": 90,
+    "Masajes faciales": 45,
+    "Tratamientos corporales": 60,
+    "Ultracavitación": 45,
+    "Ondas rusas": 45,
+    "Maderoterapia": 60,
+    "Masajes Modeladores": 60
   }
+}
+
+
