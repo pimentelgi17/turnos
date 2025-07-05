@@ -68,7 +68,22 @@ function insertarClientesIniciales(db) {
       diasAtencion: JSON.stringify({
         lunes: true, martes: true, miercoles: true, jueves: true, viernes: true, sabado: true, domingo: false
       })
-    }
+    },
+    {
+  id: 'reviviycalma',
+  nombre: 'Reviví y Calma',
+  rubro: 'Estética',
+  telefono: '1122334455',
+  email: 'revivi@gmail.com',
+  direccion: 'Calle Falsa 456, Buenos Aires',
+  horarioAtencion: JSON.stringify({ apertura: '09:00', cierre: '19:00' }),
+  intervaloTurnos: '00:30',
+  diasAtencion: JSON.stringify({
+    lunes: true, martes: true, miercoles: true, jueves: true, viernes: true, sabado: false, domingo: false
+  })
+}
+
+    
   ];
 
   clientesIniciales.forEach(cliente => {

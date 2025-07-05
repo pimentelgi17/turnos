@@ -1,0 +1,248 @@
+/* Tipografía */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+/* Estilo general del body (para este cliente específico) */
+body {
+    font-family: 'Playfair Display', serif;
+    background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #4b3e36;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+main {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.pimex-brand-center {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.pimex-brand-center img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 0.5rem;
+}
+
+.pimex-brand-center p {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #4b3e36;
+    line-height: 1.2;
+}
+
+form h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: #bb8b6c;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+form button {
+    width: 100%;
+    background-color: #bb8b6c;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #a76d52;
+}
+
+#mensaje {
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #bb8b6c;
+}
+
+/* Panel de turnos - tabla personalizada */
+header {
+    display: none; /* Ocultamos el header flotante */
+}
+
+.panel-title {
+    font-size: 2rem;
+    color: #bb8b6c;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+main.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.tabla-turnos {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    overflow-x: auto;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: #bb8b6c;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    word-break: break-word;
+}
+
+th {
+    background-color: #bb8b6c;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  /* Corrige centramiento que achica el formulario */
+  body {
+    display: block !important;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding: 20px 10px;
+    min-height: auto;
+    background: url('/clientes/estetica-vera-luna/imagenfondo.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  main {
+    max-width: 95%;
+    width: 100%;
+    padding: 24px 16px;
+    margin: 20px auto;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  form h1 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    color: #b3825f;
+  }
+
+  form input,
+  form select {
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  form button {
+    background-color: #b3825f;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  form button:hover {
+    background-color: #9d6a4c;
+  }
+
+  .pimex-brand-center p {
+    font-size: 1.1rem;
+    color: #b3825f;
+  }
+
+  .tabla-turnos {
+    padding: 1rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+    min-width: unset;
+  }
+
+  th, td {
+    padding: 0.6rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666;
+  }
+
+  td {
+    display: block;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ccc;
+  }
+}
+select option[disabled] {
+  color: #999;
+  background-color: #f9f9f9;
+}

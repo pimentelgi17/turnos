@@ -27,88 +27,114 @@
   </main>
 
   <script>
-    const clienteId = window.location.pathname.split('/')[1];
-    const form = document.getElementById('form-turno');
-    const horaSelect = document.getElementById('hora-select');
-    const mensaje = document.getElementById('mensaje');
-    const btnReservar = form.querySelector('button[type="submit"]');
+const clienteId = window.location.pathname.split('/')[1];
+const form = document.getElementById('form-turno');
+const horaSelect = document.getElementById('hora-select');
+const mensaje = document.getElementById('mensaje');
+const btnReservar = form.querySelector('button[type="submit"]');
 
-    document.getElementById('fecha').addEventListener('change', cargarHorarios);
+let config = null;
+let intervaloMin = 30;
 
-    async function cargarHorarios() {
-      const fecha = form.fecha.value;
-      if (!fecha) return;
+async function cargarConfig() {
+  try {
+    const res = await fetch(`/api/config/${clienteId}`);
+    if (!res.ok) throw new Error('Config no encontrado');
+    config = await res.json();
 
-      try {
-        const res = await fetch(`/turnos/${clienteId}.json`);
-        const turnos = res.ok ? await res.json() : [];
-        const ocupados = turnos.filter(t => t.fecha === fecha).map(t => t.hora);
+    if (config.duracionTurno) intervaloMin = parseInt(config.duracionTurno);
+  } catch (error) {
+    console.error('Error cargando configuración:', error);
+    mensaje.textContent = 'Error cargando configuración';
+  }
+}
 
-        horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
+async function cargarHorarios() {
+  const fecha = form.fecha.value;
+  if (!fecha || !config) return;
 
-        const inicio = 10 * 60;
-        const fin = 17 * 60;
-        let disponibles = 0;
+  const diaSemana = new Date(fecha).getDay();
+  if (!config.dias.includes(diaSemana)) {
+    mensaje.textContent = 'No se atiende este día';
+    horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
+    btnReservar.disabled = true;
+    return;
+  }
 
-        for (let min = inicio; min < fin; min += 30) {
-          const h = String(Math.floor(min / 60)).padStart(2, '0');
-          const m = String(min % 60).padStart(2, '0');
-          const hora = `${h}:${m}`;
+  try {
+    const res = await fetch(`/turnos/${clienteId}.json`);
+    const turnos = res.ok ? await res.json() : [];
+    const ocupados = turnos.filter(t => t.fecha === fecha).map(t => t.hora);
 
-          if (ocupados.includes(hora)) continue; // Ocupado: no agregar
+    horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
 
-          const option = document.createElement('option');
-          option.value = hora;
-          option.textContent = hora;
-          horaSelect.appendChild(option);
-          disponibles++;
-        }
+    const inicio = (config.horaInicio ?? 9) * 60;
+    const fin = (config.horaFin ?? 18) * 60;
 
-        if (disponibles === 0) {
-          const opt = document.createElement('option');
-          opt.textContent = 'No hay horarios disponibles';
-          opt.disabled = true;
-          opt.selected = true;
-          horaSelect.appendChild(opt);
-        }
+    let disponibles = 0;
 
-        btnReservar.disabled = disponibles === 0;
-      } catch (error) {
-        console.error('Error cargando horarios:', error);
-        mensaje.textContent = 'No se pudieron cargar los horarios';
-      }
+    for (let min = inicio; min + intervaloMin <= fin; min += intervaloMin) {
+      const h = String(Math.floor(min / 60)).padStart(2, '0');
+      const m = String(min % 60).padStart(2, '0');
+      const hora = `${h}:${m}`;
+      if (ocupados.includes(hora)) continue;
+
+      const option = document.createElement('option');
+      option.value = hora;
+      option.textContent = hora;
+      horaSelect.appendChild(option);
+      disponibles++;
     }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const datos = {
-        nombre: form.nombre.value,
-        correo: form.correo.value,
-        whatsapp: form.whatsapp.value,
-        fecha: form.fecha.value,
-        hora: form.hora.value
-      };
+    if (disponibles === 0) {
+      const opt = document.createElement('option');
+      opt.textContent = 'No hay horarios disponibles';
+      opt.disabled = true;
+      opt.selected = true;
+      horaSelect.appendChild(opt);
+    }
 
-      const res = await fetch(`/api/agendar/${clienteId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
+    btnReservar.disabled = disponibles === 0;
+  } catch (error) {
+    console.error('Error cargando horarios:', error);
+    mensaje.textContent = 'No se pudieron cargar los horarios';
+  }
+}
 
-      const data = await res.json();
-      mensaje.textContent = data.mensaje || 'Error al agendar turno';
-      if (res.ok) {
-        form.reset();
-        horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
-        btnReservar.disabled = false;
-      }
-    await cargarHorarios();
-      });
-      document.addEventListener('DOMContentLoaded', () => {
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById('fecha').setAttribute('min', hoy);
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const datos = {
+    nombre: form.nombre.value,
+    correo: form.correo.value,
+    whatsapp: form.whatsapp.value,
+    fecha: form.fecha.value,
+    hora: form.hora.value
+  };
+
+  const res = await fetch(`/api/agendar/${clienteId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos)
+  });
+
+  const data = await res.json();
+  mensaje.textContent = data.mensaje || 'Error al agendar turno';
+  if (res.ok) {
+    form.reset();
+    horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
+    btnReservar.disabled = false;
+  }
+  await cargarHorarios();
 });
 
-  </script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha').setAttribute('min', hoy);
+  await cargarConfig();
+  document.getElementById('fecha').addEventListener('change', cargarHorarios);
+});
+</script>
+
+
 </body>
 </html>

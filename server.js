@@ -331,8 +331,19 @@ app.get('/', (req, res) => {
   res.send('Servidor funcionando correctamente.');
 });
 
+app.get('/api/config/:clienteId', (req, res) => {
+  const clienteId = req.params.clienteId;
+  const configPath = path.join(__dirname, 'clientes', clienteId, 'config.json');
+  if (!fs.existsSync(configPath)) return res.status(404).json({ error: 'No config' });
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  res.json(config);
+});
+
+
+
 app.listen(3000, () => {
   console.log('Turnero funcionando en http://localhost:3000');
 });
+
 
 
