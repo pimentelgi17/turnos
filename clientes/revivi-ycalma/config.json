@@ -2,9 +2,14 @@
   "nombre": "Reviví y Calma",
   "rubro": "estetica",
   "email": "revivi@gmail.com",
-  "dias": [1, 2, 3, 4, 5],
-  "horaInicio": 9,
-  "horaFin": 19,
+  "dias": [1, 2, 3, 4, 6],
+  "horarios": {
+    "1": { "inicio": 15, "fin": 19 },  
+    "2": { "inicio": 15, "fin": 19 }, 
+    "3": { "inicio": 15, "fin": 19 },  
+    "4": { "inicio": 15, "fin": 19 },  
+    "6": { "inicio": 10, "fin": 16 }   
+  },
   "servicios": {
     "Masajes relajantes": 60,
     "Descontracturantes": 60,
@@ -20,5 +25,6 @@
     "Masajes Modeladores": 60
   }
 }
+
 
 

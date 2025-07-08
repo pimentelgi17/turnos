@@ -5,6 +5,10 @@
     "dias": [1, 2, 3, 4, 5],
     "horaInicio": 9,
     "horaFin": 17,
-    "duracionTurno": 30
-  }
+     "servicios": {
+    "Masajes relajantes": 60,
+    "Descontracturantes": 60,
+    "Limpieza facial": 45,
+    "Peeling facial manual": 45
+  } }
   

@@ -70,7 +70,16 @@ async function cargarHorarios() {
   const fecha = form.fecha.value;
   const servicio = servicioSelect.value;
 
-  if (!fecha || !servicio || !config) return;
+  if (!fecha || !servicio || !config) {
+    mensaje.textContent = 'Completa servicio y fecha válidos';
+    return;
+  }
+  if (!config.dias || !Array.isArray(config.dias)) {
+  mensaje.textContent = 'Configuración incorrecta de días';
+  btnReservar.disabled = true;
+  return;
+}
+
 
   try {
     const res = await fetch(`/turnos/${clienteId}.json`);
@@ -78,15 +87,26 @@ async function cargarHorarios() {
 
     horaSelect.innerHTML = '<option value="">-- Seleccionar hora --</option>';
 
-    const inicio = (config.horaInicio || 9) * 60;
-    const fin = (config.horaFin || 18) * 60;
+    const fechaSeleccionada = new Date(fecha);
+const diaSemana = fechaSeleccionada.getDay(); // 0 = domingo, 1 = lunes...
 
-    // Ordenar turnos por hora para control correcto
+const horarioDia = config.horarios && config.horarios[diaSemana];
+
+if (!horarioDia) {
+  mensaje.textContent = 'Ese día no se trabaja';
+  btnReservar.disabled = true;
+  return;
+}
+
+const inicio = horarioDia.inicio * 60;
+const fin = horarioDia.fin * 60;
+
     const ocupados = turnos
       .filter(t => t.fecha === fecha)
       .map(t => {
-        const mins = parseInt(t.hora.split(':')[0]) * 60 + parseInt(t.hora.split(':')[1]);
-        const dur = config.servicios?.[t.servicio] || 30;
+        const [h, m] = t.hora.split(':').map(Number);
+        const mins = h * 60 + m;
+        const dur = config.servicios?.[t.servicio] || config.duracionTurno || 30;
         return { inicio: mins, fin: mins + dur };
       })
       .sort((a, b) => a.inicio - b.inicio);
@@ -101,19 +121,20 @@ async function cargarHorarios() {
     let disponibles = 0;
 
     while (min + duracionMin <= fin) {
-      const h = String(Math.floor(min / 60)).padStart(2, '0');
-      const m = String(min % 60).padStart(2, '0');
-      const hora = `${h}:${m}`;
+      const haySolape = ocupados.some(t => Math.max(min, t.inicio) < Math.min(min + duracionMin, t.fin));
 
-      const solapado = ocupados.some(t => Math.max(min, t.inicio) < Math.min(min + duracionMin, t.fin));
+      if (!haySolape) {
+        const h = String(Math.floor(min / 60)).padStart(2, '0');
+        const m = String(min % 60).padStart(2, '0');
+        const hora = `${h}:${m}`;
 
-      if (!solapado) {
         const opt = document.createElement('option');
         opt.value = hora;
         opt.textContent = hora;
         horaSelect.appendChild(opt);
         disponibles++;
-        min += duracionMin; // Avanza según duración
+
+        min += duracionMin;
       } else {
         const siguienteOcupado = ocupados.find(t => t.inicio >= min);
         min = siguienteOcupado ? siguienteOcupado.fin : min + duracionMin;
@@ -129,12 +150,12 @@ async function cargarHorarios() {
     }
 
     btnReservar.disabled = disponibles === 0;
+
   } catch (error) {
     console.error('Error cargando horarios:', error);
     mensaje.textContent = 'No se pudieron cargar los horarios';
   }
 }
-
 
 
 form.addEventListener('submit', async (e) => {
