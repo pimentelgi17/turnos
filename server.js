@@ -103,45 +103,103 @@ app.get('/:clienteId/panel', (req, res) => {
     : '/default.css';
 
   let tabla = `
-    <section><h1>Turnos de ${clienteId}</h1>
-    <input type="text" id="filtroNombre" placeholder="Filtrar por nombre...">
-    <input type="date" id="filtroFecha">
-    <button onclick="aplicarFiltros()">Filtrar</button>
-    <button onclick="resetearFiltros()">Limpiar</button>
-    <div><table><thead>
-    <tr><th>Nombre</th><th>Correo</th><th>WhatsApp</th><th>Fecha</th><th>Hora</th></tr>
-    </thead><tbody>
+  <section style="max-width: 1000px; margin: 40px auto; text-align: center;">
+    <h1 style="margin-bottom: 20px;">Turnos de <span style="color:#b47b56;">${clienteId}</span></h1>
+    
+    <div style="margin-bottom: 20px;">
+      <input type="text" id="filtroNombre" placeholder="Filtrar por nombre..." style="padding:8px;">
+      <input type="date" id="filtroFecha" style="padding:8px;">
+      <button onclick="aplicarFiltros()" style="padding:8px;">Filtrar</button>
+      <button onclick="resetearFiltros()" style="padding:8px;">Limpiar</button>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table style="width: 100%; border-collapse: collapse; background: #fff; table-layout: auto;">
+        <thead style="background-color: #b47b56; color: white;">
+          <tr>
+            <th style="padding: 12px;">Nombre</th>
+            <th style="padding: 12px;">Correo</th>
+            <th style="padding: 12px;">WhatsApp</th>
+            <th style="padding: 12px;">Fecha</th>
+            <th style="padding: 12px;">Hora</th>
+            <th style="padding: 12px;">Servicio</th>
+            <th style="padding: 12px;">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+`;
+
+turnos.forEach(t => {
+  tabla += `
+    <tr>
+      <td style="padding: 10px; max-width: 200px; word-break: break-word;">${t.nombre}</td>
+      <td style="padding: 10px; max-width: 220px; word-break: break-word;">${t.correo}</td>
+      <td style="padding: 10px; max-width: 150px; word-break: break-word;">${t.whatsapp}</td>
+      <td style="padding: 10px;">${t.fecha}</td>
+      <td style="padding: 10px;">${t.hora}</td>
+      <td style="padding: 10px; max-width: 220px; word-break: break-word;">${t.servicio || ''}</td>
+      <td style="padding: 10px;">
+        <button onclick="borrarTurno('${clienteId}', '${t.fecha}', '${t.hora}')" style="padding:5px 10px;">❌ Borrar</button>
+      </td>
+    </tr>
   `;
+});
 
-  turnos.forEach(t => {
-    tabla += `<tr><td>${t.nombre}</td><td>${t.correo}</td><td>${t.whatsapp}</td><td>${t.fecha}</td><td>${t.hora}</td></tr>`;
-  });
-
-  tabla += '</tbody></table></div></section>';
+tabla += `
+        </tbody>
+      </table>
+    </div>
+  </section>
+`;
+;
 
   res.send(`
-    <html><head><meta charset="UTF-8"><title>Panel ${clienteId}</title>
-    <link rel="stylesheet" href="${cssPath}">
-    </head><body>${tabla}
-    <script>
-    function aplicarFiltros() {
-      const n = document.getElementById('filtroNombre').value.toLowerCase();
-      const f = document.getElementById('filtroFecha').value;
-      document.querySelectorAll('tbody tr').forEach(tr => {
-        const tn = tr.children[0].innerText.toLowerCase();
-        const tf = tr.children[3].innerText;
-        tr.style.display = (!n || tn.includes(n)) && (!f || tf === f) ? '' : 'none';
-      });
-    }
-    function resetearFiltros() {
-      document.getElementById('filtroNombre').value = '';
-      document.getElementById('filtroFecha').value = '';
-      aplicarFiltros();
-    }
-    </script>
-    </body></html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Panel ${clienteId}</title>
+        <link rel="stylesheet" href="${cssPath}">
+      </head>
+      <body style="font-family: Arial, sans-serif; background: #f9f9f9;">
+        ${tabla}
+        <script>
+          function aplicarFiltros() {
+            const n = document.getElementById('filtroNombre').value.toLowerCase();
+            const f = document.getElementById('filtroFecha').value;
+            document.querySelectorAll('tbody tr').forEach(tr => {
+              const tn = tr.children[0].innerText.toLowerCase();
+              const tf = tr.children[3].innerText;
+              tr.style.display = (!n || tn.includes(n)) && (!f || tf === f) ? '' : 'none';
+            });
+          }
+
+          function resetearFiltros() {
+            document.getElementById('filtroNombre').value = '';
+            document.getElementById('filtroFecha').value = '';
+            aplicarFiltros();
+          }
+
+          async function borrarTurno(clienteId, fecha, hora) {
+            if (confirm(\`¿Seguro que querés borrar el turno del \${fecha} a las \${hora}?\`)) {
+              const res = await fetch(\`/api/borrar-turno/\${clienteId}?fecha=\${fecha}&hora=\${hora}\`, { method: 'DELETE' });
+              const data = await res.json();
+              alert(data.mensaje);
+              location.reload();
+            }
+          }
+        </script>
+      </body>
+    </html>
   `);
 });
+app.delete('/api/borrar-turno/:clienteId', (req, res) => {
+  const clienteId = req.params.clienteId;
+  const { fecha, hora } = req.query;
+  const turnos = cargarTurnos(clienteId).filter(t => !(t.fecha === fecha && t.hora === hora));
+  fs.writeFileSync(path.join(TURNOS_DIR, `${clienteId}.json`), JSON.stringify(turnos, null, 2));
+  res.json({ mensaje: 'Turno eliminado correctamente' });
+});
+
 
 app.get('/api/turnos-ocupados/:clienteId', (req, res) => {
   const { clienteId } = req.params;
