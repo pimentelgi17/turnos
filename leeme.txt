@@ -20,6 +20,7 @@ git add .
 
 # 4. Hacer el commit con mensaje
 git commit -m "Correcciones responsive en panel de turnos"
+git commit -m "Correcciones revvir- calma corrección 1"
 
 # 5. Subir al repositorio remoto (origin)
 git push origin main

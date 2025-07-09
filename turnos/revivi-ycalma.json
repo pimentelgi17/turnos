@@ -2,43 +2,47 @@
   {
     "nombre": "gisele",
     "correo": "pimentelgi17@gmail.com",
-    "fecha": "2025-07-17",
+    "fecha": "2025-07-10",
     "hora": "15:00",
     "whatsapp": "1132735314"
   },
   {
     "nombre": "gisele",
-    "correo": "pimentelgi17@gmail.com",
-    "fecha": "2025-07-18",
-    "hora": "15:00",
-    "whatsapp": "1132735314"
-  },
-  {
-    "nombre": "gisele",
-    "correo": "pimentelgi17@gmail.com",
-    "fecha": "2025-07-15",
-    "hora": "15:00",
-    "whatsapp": "1132735314"
+    "correo": "pimentelgi17@gamil.com",
+    "fecha": "2025-07-10",
+    "hora": "15:30",
+    "whatsapp": "11327314"
   },
   {
     "nombre": "gisele",
     "correo": "pimentelgi17@gmail.com",
     "fecha": "2025-07-10",
     "hora": "16:00",
-    "whatsapp": "1132735314"
+    "whatsapp": "1132735314",
+    "servicio": "Limpieza facial"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentel_gisele@hotmail.com",
+    "fecha": "2025-07-10",
+    "hora": "16:45",
+    "whatsapp": "1132735314",
+    "servicio": "Limpieza facial + radiofrecuencia (combo x4)"
   },
   {
     "nombre": "gisele",
     "correo": "pimentelgi17@gmail.com",
     "fecha": "2025-07-15",
-    "hora": "15:30",
-    "whatsapp": "1132735314"
+    "hora": "15:00",
+    "whatsapp": "1132735314",
+    "servicio": "Masajes relajantes"
   },
   {
     "nombre": "gisele",
     "correo": "pimentelgi17@gmail.com",
-    "fecha": "2025-07-09",
-    "hora": "15:00",
-    "whatsapp": "1132735314"
+    "fecha": "2025-07-15",
+    "hora": "16:00",
+    "whatsapp": "1132735314",
+    "servicio": "Descontracturantes"
   }
 ]

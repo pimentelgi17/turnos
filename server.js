@@ -154,7 +154,7 @@ app.get('/api/turnos-ocupados/:clienteId', (req, res) => {
 app.post('/api/agendar/:clienteId', async (req, res) => {
   try {
     const { clienteId } = req.params;
-    const { nombre, correo, fecha, hora, whatsapp } = req.body;
+    const { nombre, correo, fecha, hora, whatsapp, servicio } = req.body;
 
     const config = cargarConfig(clienteId);
     if (!config) return res.status(404).json({ mensaje: 'Cliente no válido' });
@@ -167,7 +167,7 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
       return res.status(400).json({ mensaje: 'Turno no disponible' });
     }
 
-    guardarTurno(clienteId, { nombre, correo, fecha, hora, whatsapp });
+    guardarTurno(clienteId, { nombre, correo, fecha, hora, whatsapp, servicio });
 
     const transport = nodemailer.createTransport({
       host: 'smtp.hostinger.com',
@@ -177,11 +177,6 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS
       }
-    });
-
-    transport.verify((error, success) => {
-      if (error) console.error('❌ Error SMTP:', error);
-      else console.log('✅ SMTP listo');
     });
 
     await transport.sendMail({
@@ -198,6 +193,67 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
     res.status(500).json({ mensaje: 'Error interno del servidor' });
   }
 });
+
+
+function obtenerHorariosDisponibles(config, turnosDelDia, servicio, fecha) {
+  const diaSemana = new Date(`${fecha}T00:00`).getDay();
+  const horarioDia = config.horarios?.[diaSemana];
+  const duracionServicio = config.servicios?.[servicio];
+
+  if (!horarioDia || !duracionServicio) return [];
+
+  const inicioMinutos = horarioDia.inicio * 60;
+  const finMinutos = horarioDia.fin * 60;
+
+  // Convertir turnos existentes a rangos ocupados
+  const ocupados = turnosDelDia.map(t => {
+    const [h, m] = t.hora.split(':').map(Number);
+    const inicio = h * 60 + m;
+    const duracion = config.servicios?.[t.servicio] || 30;
+    return { inicio, fin: inicio + duracion };
+  });
+
+  const horariosLibres = [];
+  let momentoActual = inicioMinutos;
+
+  while (momentoActual + duracionServicio <= finMinutos) {
+    const solapado = ocupados.some(t => 
+      momentoActual < t.fin && (momentoActual + duracionServicio) > t.inicio
+    );
+
+    if (!solapado) {
+      const horaStr = `${String(Math.floor(momentoActual / 60)).padStart(2, '0')}:${String(momentoActual % 60).padStart(2, '0')}`;
+      horariosLibres.push(horaStr);
+    }
+
+    // Avanza en bloques de 15 minutos pero respeta el rango
+    momentoActual += 15;
+  }
+
+  return horariosLibres;
+}
+
+
+
+
+app.get('/api/horarios-disponibles/:clienteId', (req, res) => {
+  const clienteId = req.params.clienteId;
+  const { fecha, servicio } = req.query;
+
+  if (!clienteId || !fecha || !servicio) {
+    return res.status(400).json({ mensaje: 'Faltan datos' });
+  }
+
+  const config = cargarConfig(clienteId);
+  if (!config) return res.status(404).json({ mensaje: 'Cliente no encontrado' });
+
+  const turnos = cargarTurnos(clienteId).filter(t => t.fecha === fecha);
+  const horarios = obtenerHorariosDisponibles(config, turnos, servicio, fecha);
+
+  res.json({ horarios });
+});
+
+
 app.get('/', (req, res) => res.send('Servidor funcionando correctamente.'));
 
 app.listen(PORT, () => console.log(`Servidor funcionando en http://localhost:${PORT}`));
