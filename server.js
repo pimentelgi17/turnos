@@ -259,11 +259,10 @@ const htmlMensaje = `
         <li><strong>💆‍♀️ Servicio:</strong> ${servicio || 'Sin especificar'}</li>
       </ul>
 
-<<<<<<< HEAD
       ${señaMonto ? `
         <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
           Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto}</strong>.<br>
-          Alias para transferencia: <strong>lucas.estetica.lucas.maximiliano.torres</strong>
+          Alias para transferencia: <strong>lucas.estetica al nombre de Lucas Maximiliano Torres</strong>
         </p>
         <p style="font-size: 14px; margin-top: 10px;">
           Por favor, envianos el comprobante por WhatsApp una vez que realices la transferencia para validar tu reserva.
@@ -280,14 +279,6 @@ const htmlMensaje = `
     </div>
   </div>
 `;
-=======
-          ${señaMonto && linkPago ? `
-            <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
-              Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto} Alias: lucas.Estetica Lucas Maximiliano Torres</strong>.
-            </p>
-            <p><a href="${linkPago}" target="_blank" style="display:inline-block; padding:10px 20px; background:#b47b56; color:#fff; text-decoration:none; border-radius:5px;">👉 Pagar Seña Online</a></p>
-          ` : ''}
->>>>>>> 23c459964bf3ecd01087b76bc72aecce1ce59b21
 
 
     console.log('📧 Preparando envío de mail...');
