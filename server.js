@@ -239,44 +239,47 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
       }
     });
 
-    const señaMonto = config.seña ? `$${config.seña.toLocaleString('es-AR')}` : null;
-    const linkPago = config.link_pago || null;
+const señaMonto = config.seña ? `$${config.seña.toLocaleString('es-AR')}` : null;
 
-    const htmlMensaje = `
-      <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; color: #333;">
-        <div style="max-width: 600px; margin: auto; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          
-          <h1 style="color: #b47b56; text-align: center;">✨ Turno Confirmado ✨</h1>
-          
-          <p style="font-size: 16px;">Hola <strong>${nombre}</strong>,</p>
-          
-          <p style="font-size: 16px;">
-            Tu turno con <strong>${config.nombre}</strong> está confirmado. A continuación te dejamos los detalles:
-          </p>
-          
-          <ul style="list-style: none; padding: 0; font-size: 16px;">
-            <li><strong>📅 Fecha:</strong> ${fecha}</li>
-            <li><strong>⏰ Hora:</strong> ${hora}</li>
-            <li><strong>💆‍♀️ Servicio:</strong> ${servicio || 'Sin especificar'}</li>
-          </ul>
+const htmlMensaje = `
+  <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; color: #333;">
+    <div style="max-width: 600px; margin: auto; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      
+      <h1 style="color: #b47b56; text-align: center;">✨ Turno Confirmado ✨</h1>
+      
+      <p style="font-size: 16px;">Hola <strong>${nombre}</strong>,</p>
+      
+      <p style="font-size: 16px;">
+        Tu turno con <strong>${config.nombre}</strong> está confirmado. A continuación te dejamos los detalles:
+      </p>
+      
+      <ul style="list-style: none; padding: 0; font-size: 16px;">
+        <li><strong>📅 Fecha:</strong> ${fecha}</li>
+        <li><strong>⏰ Hora:</strong> ${hora}</li>
+        <li><strong>💆‍♀️ Servicio:</strong> ${servicio || 'Sin especificar'}</li>
+      </ul>
 
-          ${señaMonto && linkPago ? `
-            <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
-              Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto}</strong>.
-            </p>
-            <p><a href="${linkPago}" target="_blank" style="display:inline-block; padding:10px 20px; background:#b47b56; color:#fff; text-decoration:none; border-radius:5px;">👉 Pagar Seña Online</a></p>
-          ` : ''}
+      ${señaMonto ? `
+        <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
+          Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto}</strong>.<br>
+          Alias para transferencia: <strong>lucas.estetica.lucas.maximiliano.torres</strong>
+        </p>
+        <p style="font-size: 14px; margin-top: 10px;">
+          Por favor, envianos el comprobante por WhatsApp una vez que realices la transferencia para validar tu reserva.
+        </p>
+      ` : ''}
 
-          <p style="font-size: 15px; margin-top: 20px;">
-            Te esperamos. Si necesitás cancelar o modificar tu turno, por favor comunicate con nosotros.
-          </p>
-          
-          <p style="font-size: 13px; color: #999; margin-top: 30px;">
-            Este es un mensaje automático de <strong>Pimex Consultora</strong>.
-          </p>
-        </div>
-      </div>
-    `;
+      <p style="font-size: 15px; margin-top: 20px;">
+        Te esperamos. Si necesitás cancelar o modificar tu turno, por favor comunicate con nosotros.
+      </p>
+      
+      <p style="font-size: 13px; color: #999; margin-top: 30px;">
+        Este es un mensaje automático de <strong>Pimex Consultora</strong>.
+      </p>
+    </div>
+  </div>
+`;
+
 
     console.log('📧 Preparando envío de mail...');
     await transport.sendMail({

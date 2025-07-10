@@ -61,5 +61,29 @@
     "hora": "16:00",
     "whatsapp": "1132735314",
     "servicio": "Ondas rusas"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-22",
+    "hora": "15:00",
+    "whatsapp": "1132735314",
+    "servicio": "Maderoterapia"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-30",
+    "hora": "17:15",
+    "whatsapp": "1132735314",
+    "servicio": "Ondas rusas"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-24",
+    "hora": "15:00",
+    "whatsapp": "1132735314",
+    "servicio": "Descontracturantes"
   }
 ]
