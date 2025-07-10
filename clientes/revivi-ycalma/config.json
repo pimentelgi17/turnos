@@ -2,6 +2,8 @@
   "nombre": "Reviví y Calma",
   "rubro": "estetica",
   "email": "revivi@gmail.com",
+  "seña": 15000,
+  "link_pago": "https://link.mercadopago.com.ar/tupago",
   "dias": [1, 2, 3, 4, 6],
   "horarios": {
     "1": { "inicio": 15, "fin": 19 },  

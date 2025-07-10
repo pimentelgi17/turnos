@@ -1,13 +1,6 @@
 [
   {
     "nombre": "gisele",
-    "correo": "pimentelgi17@gmail.com",
-    "fecha": "2025-07-10",
-    "hora": "15:00",
-    "whatsapp": "1132735314"
-  },
-  {
-    "nombre": "gisele",
     "correo": "pimentelgi17@gamil.com",
     "fecha": "2025-07-10",
     "hora": "15:30",
@@ -36,5 +29,37 @@
     "hora": "15:00",
     "whatsapp": "1132735314",
     "servicio": "Masajes relajantes"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-17",
+    "hora": "15:00",
+    "whatsapp": "1132735314",
+    "servicio": "Tratamientos corporales"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-24",
+    "hora": "16:30",
+    "whatsapp": "1132735314",
+    "servicio": "Peeling facial manual"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentelgi17@gmail.com",
+    "fecha": "2025-07-15",
+    "hora": "16:00",
+    "whatsapp": "1132735314",
+    "servicio": "Peeling facial manual"
+  },
+  {
+    "nombre": "gisele",
+    "correo": "pimentel_gisele@hotmail.com",
+    "fecha": "2025-07-17",
+    "hora": "16:00",
+    "whatsapp": "1132735314",
+    "servicio": "Ondas rusas"
   }
 ]
