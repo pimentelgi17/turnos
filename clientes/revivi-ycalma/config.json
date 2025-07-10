@@ -3,13 +3,22 @@
   "rubro": "estetica",
   "email": "revivi@gmail.com",
   "seña": 15000,
+<<<<<<< HEAD
+=======
+  "link_pago":,
+>>>>>>> 23c459964bf3ecd01087b76bc72aecce1ce59b21
   "dias": [1, 2, 3, 4, 5, 6],
   "horarios": {
     "1": { "inicio": 15, "fin": 19 },       
     "2": { "inicio": 15, "fin": 19 }, 
     "3": { "inicio": 15, "fin": 19 },  
+<<<<<<< HEAD
     "4": { "inicio": 15, "fin": 19 },
     "5": { "inicio": 15, "fin": 19 },  
+=======
+    "4": { "inicio": 15, "fin": 19 }, 
+    "5": { "inicio": 15, "fin": 19 },
+>>>>>>> 23c459964bf3ecd01087b76bc72aecce1ce59b21
     "6": { "inicio": 10, "fin": 16 }   
   },
   "servicios": {
