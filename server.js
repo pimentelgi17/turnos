@@ -262,7 +262,7 @@ app.post('/api/agendar/:clienteId', async (req, res) => {
 
           ${señaMonto && linkPago ? `
             <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
-              Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto}</strong>.
+              Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto} Alias: lucas.Estetica Lucas Maximiliano Torres</strong>.
             </p>
             <p><a href="${linkPago}" target="_blank" style="display:inline-block; padding:10px 20px; background:#b47b56; color:#fff; text-decoration:none; border-radius:5px;">👉 Pagar Seña Online</a></p>
           ` : ''}
