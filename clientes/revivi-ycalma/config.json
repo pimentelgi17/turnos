@@ -5,14 +5,14 @@
   "seña": 15000,
   "dias": [1, 2, 3, 4, 5, 6],
   "horarios": {
-    "1": { "inicio": 15, "fin": 19 },       
-    "2": { "inicio": 15, "fin": 19 }, 
-    "3": { "inicio": 15, "fin": 19 },  
-    "4": { "inicio": 15, "fin": 19 },
-    "5": { "inicio": 15, "fin": 19 },  
-    "4": { "inicio": 15, "fin": 19 }, 
-    "5": { "inicio": 15, "fin": 19 },
-    "6": { "inicio": 10, "fin": 16 }   
+    "1": { "inicio": 8, "fin": 13 },       
+    "2": { "inicio": 8, "fin": 13 }, 
+    "3": { "inicio": 8, "fin": 13 },  
+    "4": { "inicio": 8, "fin": 13 },
+    "5": { "inicio": 8, "fin": 13 },  
+    "4": { "inicio": 8, "fin": 13 }, 
+    "5": { "inicio": 8, "fin": 13 },
+    "6": { "inicio": 8, "fin": 13 }   
   },
   "servicios": {
     "Masajes relajantes": 60,

@@ -262,7 +262,7 @@ const htmlMensaje = `
       ${señaMonto ? `
         <p style="font-size: 15px; margin-top: 20px; color: #b47b56;">
           Para confirmar tu turno es necesario abonar una seña de <strong>${señaMonto}</strong>.<br>
-          Alias para transferencia: <strong>lucas.estetica al nombre de Lucas Maximiliano Torres</strong>
+          Alias para transferencia: <strong>lucas.Estetica al nombre de Lucas Maximiliano Torres</strong>
         </p>
         <p style="font-size: 14px; margin-top: 10px;">
           Por favor, envianos el comprobante por WhatsApp una vez que realices la transferencia para validar tu reserva.
